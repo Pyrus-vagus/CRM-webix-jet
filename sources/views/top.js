@@ -1,50 +1,54 @@
-import {JetView, plugins} from "webix-jet";
+import { JetView, plugins } from "webix-jet";
 
 export default class TopView extends JetView {
-	config() {
-		let header = {
-			type: "header", template: this.app.config.name, css: "webix_header app_header"
-		};
+  config() {
+    let header = {
+      type: "header",
+      template: "header",
+    };
 
-		let menu = {
-			view: "menu",
-			id: "top:menu",
-			css: "app_menu",
-			width: 180,
-			layout: "y",
-			select: true,
-			template: "<span class='webix_icon #icon#'></span> #value# ",
-			data: [
-				{value: "Dashboard", id: "start", icon: "wxi-columns"},
-				{value: "Data", id: "data", icon: "wxi-pencil"}
-			]
-		};
+    let menu = {
+      view: "menu",
+      id: "top:menu",
+      css: "app_menu",
+      width: 180,
+      layout: "y",
+      select: true,
+      template: "<span class='webix_icon #icon#'></span> #value# ",
+      data: [
+        { value: "Contacts", id: "contacts.contacts", icon: "#" },
+        { value: "Activities", id: "activities.table", icon: "#" },
+        { value: "Settings", id: "settings.settings", icon: "#" },
+      ],
+    };
 
-		let ui = {
-			type: "clean",
-			paddingX: 5,
-			css: "app_layout",
-			cols: [
-				{
-					paddingX: 5,
-					paddingY: 10,
-					rows: [{css: "webix_shadow_medium", rows: [header, menu]}]
-				},
-				{
-					type: "wide",
-					paddingY: 10,
-					paddingX: 5,
-					rows: [
-						{$subview: true}
-					]
-				}
-			]
-		};
+    let ui = {
+      css: "app_layout",
+      rows: [
+        header,
+        {
+          type: "clean",
+          paddingX: 5,
+          cols: [
+            {
+              //paddingX: 5,
+              //paddingY: 10,
+              rows: [{ css: "webix_shadow_medium", rows: [menu] }],
+            },
+            {
+              type: "wide",
+              //paddingY: 10,
+              //paddingX: 5,
+              rows: [{ $subview: true }],
+            },
+          ],
+        },
+      ],
+    };
+    return ui;
+  }
 
-		return ui;
-	}
-
-	init() {
-		this.use(plugins.Menu, "top:menu");
-	}
+  init() {
+    this.use(plugins.Menu, "top:menu");
+  }
 }
