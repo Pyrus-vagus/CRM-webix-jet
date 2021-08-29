@@ -4,7 +4,10 @@ export default class TopView extends JetView {
   config() {
     let header = {
       type: "header",
-      template: "header",
+      template: () => {
+        //     console.log(this.app.getUrl());
+        return "Hi";
+      },
     };
 
     let menu = {
@@ -16,9 +19,13 @@ export default class TopView extends JetView {
       select: true,
       template: "<span class='webix_icon #icon#'></span> #value# ",
       data: [
-        { value: "Contacts", id: "contacts.contacts", icon: "#" },
-        { value: "Activities", id: "activities.table", icon: "#" },
-        { value: "Settings", id: "settings.settings", icon: "#" },
+        { value: "Contacts", id: "contacts.contacts", icon: "fas fa-users" },
+        {
+          value: "Activities",
+          id: "activities.table",
+          icon: "far fa-calendar-alt",
+        },
+        { value: "Settings", id: "settings.settings", icon: "fas fa-cogs" },
       ],
     };
 
@@ -51,4 +58,7 @@ export default class TopView extends JetView {
   init() {
     this.use(plugins.Menu, "top:menu");
   }
+  // urlChange() {
+  //   console.log(this.getUrl()[1].page);
+  // }
 }
