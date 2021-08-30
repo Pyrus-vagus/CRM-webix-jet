@@ -1,12 +1,15 @@
 import { JetView } from "webix-jet";
 import { contacts } from "../../models/contacts";
+import { statuses } from "../../models/statuses";
 import "../../styles/contacts.css";
+
 export default class DetailsView extends JetView {
   config() {
     const left = {
       gravity: 3,
       localId: "left",
       template: function (o) {
+        const status = statuses.getItem(o.StatusID);
         return `<h2 class="top">${o.FirstName || "Name"} ${
           o.LastName || "Surname"
         }</h2>
@@ -16,7 +19,9 @@ export default class DetailsView extends JetView {
                o.Photo ||
                "https://lowcars.net/wp-content/uploads/2017/02/userpic.png"
              }" alt="Image" style="width:100%">
-             <span class = "status">${o.StatusID || "Status"}</span>
+             <span class = "status">${
+               status ? status.Value : "Status"
+             } <span class="fas fa-${status ? status.Icon : ""}"></span>
            </div>
            <ul class="fa-ul list container-item">
              <li><span class="fa-li"><i class="fas fa-envelope"></i></span>${
