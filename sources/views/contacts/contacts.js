@@ -15,9 +15,9 @@ export default class ListView extends JetView {
             obj.Photo ||
             "https://lowcars.net/wp-content/uploads/2017/02/userpic.png"
           }" style="width:40px">
-          <h3 class="user-preview">${obj.FirstName} ${obj.LastName} <span>${
-          obj.Company
-        }</span></h3>
+          <h3 class="user-preview">${obj.FirstName || "Name"} ${
+          obj.LastName || "Surname"
+        } <span>${obj.Company || "Company"}</span></h3>
         </div>
           `,
         height: 55,

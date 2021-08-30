@@ -4,7 +4,7 @@ import "../../styles/contacts.css";
 export default class DetailsView extends JetView {
   config() {
     const left = {
-      fillspace: true,
+      gravity: 3,
       localId: "left",
       template: function (o) {
         return `<h2 class="top">${o.FirstName || "Name"} ${
@@ -50,30 +50,23 @@ export default class DetailsView extends JetView {
           height: 28,
         },
         {
+          margin: 10,
           cols: [
             {
               view: "button",
-              value: "Delete",
-              icon: "fas fa-trash",
-              css: "mybutton",
-              inputWidth: 80,
-              width: 80,
-              inputHeight: 30,
-              margin: {
-                right: 10,
-              },
+              label:
+                '<span class="webix_icon far fa-trash-alt" style="color:black"></span><span class="text">Delete</span>',
+              css: "icon-btn",
+              width: 78,
+              height: 35,
             },
             {
               view: "button",
-              value: "Edit",
-              icon: "fas fa-edit",
-              css: "mybutton",
-              inputWidth: 80,
-              width: 80,
-              inputHeight: 30,
-              margin: {
-                right: 10,
-              },
+              label:
+                '<span class="webix_icon far fa-edit" style="color:black"></span><span class="text">Edit</span>',
+              css: "icon-btn",
+              width: 78,
+              height: 35,
             },
           ],
         },

@@ -28,11 +28,16 @@
 .right-det {
   background-color: white;
 }
-.mybutton button.webix_button {
+.icon-btn button.webix_button {
   background-color: transparent;
   border: 1px black solid;
   border-radius: 5px;
   color: black;
+  text-align: center;
+  vertical-align: middle;
+}
+.text {
+  font-size: 13px;
 }
 .user {
   border-radius: 50%;
@@ -51,6 +56,7 @@
 .user-preview > span {
   font-size: 12px;
 }
+
 @media only screen and (max-width: 1000px) {
   .container {
     flex-direction: column;
