@@ -1,5 +1,9 @@
 .top {
   font-weight: normal;
+  font-size: 25px;
+  line-height: 35px;
+  margin: 0;
+  padding: 11px 0 5px 10px;
 }
 .container {
   display: flex;
@@ -8,15 +12,15 @@
 
 .container-item {
   flex-basis: 30%;
+  padding: 0 10px 0 10px;
 }
 .container-picture {
+  padding-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.status {
-  padding: 15px;
-}
+
 .list {
   margin-top: 0;
   margin-bottom: 0;
@@ -24,8 +28,9 @@
 }
 .status {
   text-align: center;
+  padding: 15px;
 }
-.right-det {
+.details {
   background-color: white;
 }
 .icon-btn button.webix_button {
@@ -60,5 +65,12 @@
 @media only screen and (max-width: 1000px) {
   .container {
     flex-direction: column;
+    align-items: center;
+  }
+  .container-item {
+    width: 50%;
+  }
+  .top {
+    text-align: center;
   }
 }

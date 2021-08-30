@@ -6,6 +6,7 @@ import "../../styles/contacts.css";
 export default class DetailsView extends JetView {
   config() {
     const left = {
+      type: "clean",
       gravity: 3,
       localId: "left",
       template: function (o) {
@@ -49,10 +50,9 @@ export default class DetailsView extends JetView {
       },
     };
     const right = {
-      css: "right-det",
       rows: [
         {
-          height: 28,
+          height: 15,
         },
         {
           margin: 10,
@@ -78,7 +78,7 @@ export default class DetailsView extends JetView {
         {},
       ],
     };
-    return { cols: [left, right] };
+    return { cols: [left, right], css: "details" };
   }
   urlChange() {
     contacts.waitData.then(() => {

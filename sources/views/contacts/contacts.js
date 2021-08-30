@@ -37,4 +37,14 @@ export default class ListView extends JetView {
       this.$$("list").parse(contacts);
     });
   }
+  urlChange() {
+    contacts.waitData.then(() => {
+      const id = this.getParam("id");
+      if (!contacts.exists(id)) {
+        this.$$("list").select(contacts.getFirstId());
+      } else if (id && contacts.exists(id)) {
+        this.$$("list").select(id);
+      }
+    });
+  }
 }
