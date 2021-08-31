@@ -14,10 +14,12 @@ export default class ListView extends JetView {
       localId: "table",
       columns: [
         {
-          id: "ch1",
+          id: "State",
           header: "",
           template: "{common.checkbox()}",
           fillspace: 1,
+          checkValue: "Open",
+          checkValue: "Close",
         },
         {
           id: "TypeID",
@@ -39,6 +41,7 @@ export default class ListView extends JetView {
               },
             },
           ],
+          sort: "text",
           template: (o) => {
             const type = activityType.getItem(o.TypeID);
             return `${type ? type.Value : "-"}`;
@@ -55,6 +58,7 @@ export default class ListView extends JetView {
           id: "Details",
           header: ["Details", { content: "textFilter" }],
           fillspace: 8,
+          sort: "text",
         },
         {
           id: "ContactID",
@@ -79,6 +83,7 @@ export default class ListView extends JetView {
                 : "Unknown person"
             }`;
           },
+          sort: "text",
           fillspace: 4,
         },
         {
@@ -94,6 +99,14 @@ export default class ListView extends JetView {
           fillspace: 1,
         },
       ],
+      on: {
+        onCheck: function (row, column, state) {
+          if (column == "State")
+            activities.updateItem(row, {
+              State: state,
+            });
+        },
+      },
     };
     return { rows: [header, grid] };
   }
