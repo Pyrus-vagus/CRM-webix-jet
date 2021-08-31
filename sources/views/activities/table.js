@@ -24,8 +24,19 @@ export default class ListView extends JetView {
           header: [
             "Activity type",
             {
-              content: "serverSelectFilter",
-              options: activityType,
+              content: "richSelectFilter",
+              suggest: {
+                body: {
+                  template: (obj) => {
+                    if (obj.id == "$webix_empty") return "";
+                    else return activityType.getItem(obj.id).Value;
+                  },
+                },
+              },
+              compare: function (item, value, data) {
+                if (data.TypeID == value) return true;
+                return false;
+              },
             },
           ],
           template: (o) => {
@@ -34,11 +45,32 @@ export default class ListView extends JetView {
           },
           fillspace: 5,
         },
-        { id: "DueDate", header: "Due date", fillspace: 4 },
-        { id: "Details", header: "Details", fillspace: 8 },
+        {
+          id: "DueDate",
+          header: ["Due date", { content: "datepickerFilter" }],
+          format: webix.i18n.longDateFormatStr,
+          fillspace: 4,
+        },
+        {
+          id: "Details",
+          header: ["Details", { content: "textFilter" }],
+          fillspace: 8,
+        },
         {
           id: "ContactID",
-          header: "Contact",
+          header: [
+            "Contact",
+            {
+              content: "textFilter",
+              compare: function (value, filter) {
+                const contact = contacts.getItem(value);
+                const name = `${contact.FirstName} ${contact.LastName}`;
+                value = name.toString().toLowerCase();
+                filter = filter.toString().toLowerCase();
+                return value.indexOf(filter) === 0;
+              },
+            },
+          ],
           template: (o) => {
             const contact = contacts.getItem(o.ContactID);
             return `${
@@ -69,5 +101,7 @@ export default class ListView extends JetView {
     activities.waitData.then(() => {
       this.$$("table").parse(activities);
     });
+    contacts.waitData.then(() => this.$$("table").refresh());
+    activityType.waitData.then(() => this.$$("table").refresh());
   }
 }
