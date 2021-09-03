@@ -1,6 +1,6 @@
 import { JetView } from "webix-jet";
 import { contacts } from "../../models/contacts";
-import "../../styles/contacts.css";
+import "../../styles/view.css";
 export default class ListView extends JetView {
   config() {
     const list = {
@@ -9,14 +9,14 @@ export default class ListView extends JetView {
       select: true,
       width: 200,
       type: {
-        template: (obj) => `
+        template: (o) => `
         <div class="container-list">
           <image class="user" src="${
-            obj.Photo ||
+            o.Photo ||
             "https://lowcars.net/wp-content/uploads/2017/02/userpic.png"
           }" style="width:40px">
-          <h3 class="user-preview">${obj.FullName || "Name Surname"}
-          <span>${obj.Company || "Company"}</span></h3>
+          <h3 class="user-preview">${o.FullName || "Name Surname"}
+          <span>${o.Company || "Company"}</span></h3>
         </div>
           `,
         height: 55,

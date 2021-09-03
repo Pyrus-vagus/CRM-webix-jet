@@ -1,7 +1,7 @@
 import { JetView } from "webix-jet";
 import { contacts } from "../../models/contacts";
 import { statuses } from "../../models/statuses";
-import "../../styles/contacts.css";
+import "../../styles/view.css";
 
 export default class DetailsView extends JetView {
   config() {
@@ -58,7 +58,7 @@ export default class DetailsView extends JetView {
             {
               view: "button",
               label:
-                '<span class="webix_icon far fa-trash-alt" style="color:black"></span><span class="text">Delete</span>',
+                "<span class='webix_icon far fa-trash-alt' style='color:black'></span><span class='text'>Delete</span>",
               css: "icon-btn",
               width: 78,
               height: 35,
@@ -66,7 +66,7 @@ export default class DetailsView extends JetView {
             {
               view: "button",
               label:
-                '<span class="webix_icon far fa-edit" style="color:black"></span><span class="text">Edit</span>',
+                "<span class='webix_icon far fa-edit' style='color:black'></span><span class='text'>Edit</span>",
               css: "icon-btn",
               width: 78,
               height: 35,

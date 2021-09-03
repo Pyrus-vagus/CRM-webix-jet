@@ -3,15 +3,15 @@ export const contacts = new webix.DataCollection({
   url: "http://localhost:8096/api/v1/contacts/",
   save: "rest->http://localhost:8096/api/v1/contacts/",
   scheme: {
-    $init: (obj) => {
-      obj.FullName = `${obj.FirstName} ${obj.LastName}`;
-      obj.Birthday = new Date(obj.Birthday);
-      obj.Birthday = webix.i18n.longDateFormatStr(obj.Birthday);
-      obj.StartDate = new Date(obj.StartDate);
+    $init: (o) => {
+      o.FullName = `${o.FirstName} ${o.LastName}`;
+      o.Birthday = new Date(o.Birthday);
+      o.Birthday = webix.i18n.longDateFormatStr(o.Birthday);
+      o.StartDate = new Date(o.StartDate);
     },
-    $save: (obj) => {
-      obj.Birthday = saveDate(obj.Birthday);
-      obj.StartDate = saveDate(obj.StartDate);
+    $save: (o) => {
+      o.Birthday = saveDate(o.Birthday);
+      o.StartDate = saveDate(o.StartDate);
     },
   },
 });

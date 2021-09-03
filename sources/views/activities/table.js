@@ -3,7 +3,7 @@ import { contacts } from "../../models/contacts";
 import { activities } from "../../models/activities";
 import { activityType } from "../../models/activitytype";
 import EditForm from "./form";
-import "../../styles/contacts.css";
+import "../../styles/view.css";
 export default class ListView extends JetView {
   config() {
     const header = {
@@ -41,9 +41,9 @@ export default class ListView extends JetView {
               content: "richSelectFilter",
               suggest: {
                 body: {
-                  template: (obj) => {
-                    if (obj.id == "$webix_empty") return "";
-                    else return activityType.getItem(obj.id).Value;
+                  template: (o) => {
+                    if (o.id == "$webix_empty") return "";
+                    else return activityType.getItem(o.id).Value;
                   },
                 },
               },

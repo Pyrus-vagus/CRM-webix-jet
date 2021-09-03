@@ -5,12 +5,12 @@ export const activities = new webix.DataCollection({
   url: "http://localhost:8096/api/v1/activities/",
   save: "rest->http://localhost:8096/api/v1/activities/",
   scheme: {
-    $init: (obj) => {
-      obj.DueDate = new Date(obj.DueDate);
-      obj.Time = getTime(obj.DueDate);
+    $init: (o) => {
+      o.DueDate = new Date(o.DueDate);
+      o.Time = getTime(o.DueDate);
     },
-    $save: (obj) => {
-      obj.DueDate = `${saveDate(obj.DueDate)} ${saveTime(obj.Time)}`;
+    $save: (o) => {
+      o.DueDate = `${saveDate(o.DueDate)} ${saveTime(o.Time)}`;
     },
   },
 });

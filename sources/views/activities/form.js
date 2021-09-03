@@ -2,7 +2,7 @@ import { JetView } from "webix-jet";
 import { activities } from "../../models/activities";
 import { activityType } from "../../models/activitytype";
 import { contacts } from "../../models/contacts";
-import "../../styles/contacts.css";
+import "../../styles/view.css";
 
 export default class EditForm extends JetView {
   constructor(app, name, param) {
@@ -32,7 +32,7 @@ export default class EditForm extends JetView {
             label: "Type",
             options: {
               body: {
-                template: (obj) => activityType.getItem(obj.id).Value,
+                template: (o) => activityType.getItem(o.id).Value,
                 data: activityType,
               },
             },
@@ -44,7 +44,7 @@ export default class EditForm extends JetView {
             label: "Contact",
             options: {
               body: {
-                template: (obj) => contacts.getItem(obj.id).FullName,
+                template: (o) => contacts.getItem(o.id).FullName,
                 data: contacts,
               },
             },
