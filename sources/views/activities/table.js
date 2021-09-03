@@ -33,6 +33,7 @@ export default class ListView extends JetView {
           fillspace: 1,
           checkValue: "Open",
           uncheckValue: "Close",
+          minWidth: 30,
         },
         {
           id: "TypeID",
@@ -98,13 +99,17 @@ export default class ListView extends JetView {
         {
           id: "edit",
           header: "",
-          template: "<span class='webix_icon far fa-edit'></span>",
+          template: "<span class='webix_icon far fa-edit myhover'></span>",
+          css: "edit",
+          minWidth: 30,
           fillspace: 1,
         },
         {
           id: "bin",
           header: "",
           template: "<span class='webix_icon far fa-trash-alt'></span>",
+          css: "delete",
+          minWidth: 30,
           fillspace: 1,
         },
       ],

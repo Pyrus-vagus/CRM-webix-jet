@@ -65,7 +65,12 @@
 .user-preview > span {
   font-size: 12px;
 }
-
+.edit .webix_cell:hover {
+  background-color: lightyellow;
+}
+.delete .webix_cell:hover {
+  background-color: lightpink;
+}
 @media only screen and (max-width: 1000px) {
   .container {
     flex-direction: column;
