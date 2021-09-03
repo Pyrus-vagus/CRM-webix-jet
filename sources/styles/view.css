@@ -69,12 +69,10 @@
 .edit .webix_cell:hover,
 .edit .webix_cell .webix_row_select:hover {
   background-color: lightyellow !important;
-  cursor: pointer;
 }
 .delete .webix_cell:hover,
 .edit .webix_cell .webix_row_select:hover {
   background-color: lightpink !important;
-  cursor: pointer;
 }
 @media only screen and (max-width: 1000px) {
   .container {
