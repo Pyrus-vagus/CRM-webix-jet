@@ -11,9 +11,7 @@ export default class DetailsView extends JetView {
       localId: "left",
       template: function (o) {
         const status = statuses.getItem(o.StatusID);
-        return `<h2 class="top">${o.FirstName || "Name"} ${
-          o.LastName || "Surname"
-        }</h2>
+        return `<h2 class="top">${o.FullName || "Name Surname"}</h2>
         <div class="container">
            <div class = "container-item container-picture">
              <img class="picture" src="${
@@ -43,7 +41,7 @@ export default class DetailsView extends JetView {
                o.Birthday || "date of birth"
              }</li>
              <li><span class="fa-li"><i class="fas fa-map-marker-alt"></i></span>${
-               o.Address || "location"
+               o.Address || "Not specified"
              }</li>
            </ul>
         </div>`;
