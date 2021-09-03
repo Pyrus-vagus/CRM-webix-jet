@@ -79,7 +79,7 @@ export default class EditForm extends JetView {
                 view: "button",
                 localId: "saveButton",
                 value: `${this._name === "Edit" ? "Save" : "Add"}`,
-                css: "icon-btn",
+                css: "icon-btn save-button",
               },
               {
                 view: "button",

@@ -42,7 +42,8 @@
   text-align: center;
   vertical-align: middle;
 }
-.webix_confirm-warning .webix_popup_button.confirm div {
+.webix_confirm-warning .webix_popup_button.confirm div,
+.save-button button.webix_button {
   background-color: gainsboro;
 }
 .text {
@@ -68,10 +69,12 @@
 .edit .webix_cell:hover,
 .edit .webix_cell .webix_row_select:hover {
   background-color: lightyellow;
+  cursor: pointer;
 }
 .delete .webix_cell:hover,
 .edit .webix_cell .webix_row_select:hover {
   background-color: lightpink;
+  cursor: pointer;
 }
 @media only screen and (max-width: 1000px) {
   .container {
