@@ -124,6 +124,8 @@ export default class ListView extends JetView {
           this.webix
             .confirm({
               title: "Are you sure?",
+              type: "confirm-warning",
+              //css: "custom",
               ok: "Yes",
               cancel: "No",
               text: "You will delete the item permanently!",

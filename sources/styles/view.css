@@ -33,13 +33,17 @@
 .details {
   background-color: white;
 }
-.icon-btn button.webix_button {
+.icon-btn button.webix_button,
+.webix_confirm-warning .webix_popup_button div {
   background-color: transparent;
   border: 1px black solid;
   border-radius: 5px;
   color: black;
   text-align: center;
   vertical-align: middle;
+}
+.webix_confirm-warning .webix_popup_button.confirm div {
+  background-color: gainsboro;
 }
 .text {
   font-size: 13px;
