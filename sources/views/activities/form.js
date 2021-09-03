@@ -105,14 +105,14 @@ export default class EditForm extends JetView {
     }
     this.getRoot().show();
   }
-  close() {
+  closePopup() {
     const form = this.$$("form");
     form.clear();
     form.clearValidation();
     this.getRoot().hide();
   }
   init() {
-    this.$$("saveButton").attachEvent("onItemClick", () => {
+    this.on(this.$$("saveButton"), "onItemClick", () => {
       const form = this.$$("form");
       if (!form.validate()) return false;
       const values = form.getValues();
@@ -120,9 +120,9 @@ export default class EditForm extends JetView {
         if (this._name === "Add") {
           activities.add(values);
         } else if (form.isDirty()) activities.updateItem(values.id, values);
-        this.close();
+        this.closePopup();
       });
     });
-    this.$$("cancelButton").attachEvent("onItemClick", () => this.close());
+    this.on(this.$$("cancelButton"), "onItemClick", () => this.closePopup());
   }
 }

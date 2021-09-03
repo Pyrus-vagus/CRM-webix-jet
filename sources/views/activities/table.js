@@ -165,8 +165,9 @@ export default class ListView extends JetView {
     activityType.waitData.then(() => this.$$("table").refresh());
     this.win1 = this.ui(new EditForm(this.app, "Add", ""));
     this.win2 = this.ui(new EditForm(this.app, "Edit", ""));
-    activities.attachEvent("onAfterAdd", (id) => {
+    this.on(activities, "onAfterAdd", (id) => {
       this.$$("table").select(id);
+      this.$$("table").show(id);
     });
   }
 }
