@@ -14,6 +14,7 @@ export default class ListView extends JetView {
           view: "button",
           value: "Add activity",
           width: 150,
+          css: "icon-btn",
           click: () => {
             this.win1.showWindow();
           },
@@ -157,5 +158,8 @@ export default class ListView extends JetView {
     activityType.waitData.then(() => this.$$("table").refresh());
     this.win1 = this.ui(new EditForm(this.app, "Add", ""));
     this.win2 = this.ui(new EditForm(this.app, "Edit", ""));
+    activities.attachEvent("onAfterAdd", (id) => {
+      this.$$("table").select(id);
+    });
   }
 }

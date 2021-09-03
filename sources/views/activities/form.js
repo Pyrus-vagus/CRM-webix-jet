@@ -73,13 +73,20 @@ export default class EditForm extends JetView {
             labelRight: "Completed",
           },
           {
+            margin: 10,
             cols: [
               {
                 view: "button",
                 localId: "saveButton",
                 value: `${this._name === "Edit" ? "Save" : "Add"}`,
+                css: "icon-btn",
               },
-              { view: "button", localId: "cancelButton", value: "Cancel" },
+              {
+                view: "button",
+                localId: "cancelButton",
+                value: "Cancel",
+                css: "icon-btn",
+              },
             ],
           },
         ],
