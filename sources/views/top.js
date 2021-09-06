@@ -18,13 +18,13 @@ export default class TopView extends JetView {
 			select: true,
 			template: o => `<span class="webix_icon ${o.icon}" style="padding-right: 10px"></span> ${o.value} `,
 			data: [
-				{value: "Contacts", id: "contacts.contacts", icon: "fas fa-users"},
+				{value: "Contacts", id: "contacts", icon: "fas fa-users"},
 				{
 					value: "Activities",
-					id: "activities.table",
+					id: "activities",
 					icon: "far fa-calendar-alt"
 				},
-				{value: "Settings", id: "settings.settings", icon: "fas fa-cogs"}
+				{value: "Settings", id: "settings", icon: "fas fa-cogs"}
 			]
 		};
 
@@ -56,9 +56,9 @@ export default class TopView extends JetView {
 
 	urlChange() {
 		const page = this.getUrl()[1].page;
-		const rawValue = page.substring(0, page.indexOf("."));
+		// const rawValue = page.substring(0, page.indexOf("."));
 		const value = {
-			value: rawValue.charAt(0).toUpperCase() + rawValue.slice(1)
+			value: page.charAt(0).toUpperCase() + page.slice(1)
 		};
 		this.$$("top").setValues(value);
 	}
