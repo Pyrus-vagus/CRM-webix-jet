@@ -130,7 +130,7 @@ export default class ListView extends JetView {
 						.then(() => activities.remove(id));
 				},
 				"fa-edit": (event, id) => {
-					this.win2.showWindow(id);
+					this.win1.showWindow(id);
 				}
 			}
 		};
@@ -147,8 +147,7 @@ export default class ListView extends JetView {
 				this.$$("table").refresh();
 				this.$$("table").refresh();
 			});
-		this.win1 = this.ui(new EditForm(this.app, "Add", ""));
-		this.win2 = this.ui(new EditForm(this.app, "Edit", ""));
+		this.win1 = this.ui(EditForm);
 		this.on(activities, "onAfterAdd", (id) => {
 			this.$$("table").select(id);
 			this.$$("table").showItem(id);

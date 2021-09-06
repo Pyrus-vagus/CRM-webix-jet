@@ -6,12 +6,6 @@ import contacts from "../../models/contacts";
 import "../../styles/view.css";
 
 export default class EditForm extends JetView {
-	constructor(app, name, param) {
-		super(app);
-		this._param = param;
-		this._name = name;
-	}
-
 	config() {
 		const form = {
 			view: "popup",
@@ -24,7 +18,8 @@ export default class EditForm extends JetView {
 				localId: "form",
 				elements: [
 					{
-						template: `${this._name} activity`,
+						localId: "template",
+						template: o => `${o.name} activity`,
 						type: "header"
 					},
 					{view: "text", name: "Details", label: "Details"},
@@ -80,7 +75,6 @@ export default class EditForm extends JetView {
 							{
 								view: "button",
 								localId: "saveButton",
-								value: `${this._name === "Edit" ? "Save" : "Add"}`,
 								css: "icon-btn save-button"
 							},
 							{
@@ -102,8 +96,16 @@ export default class EditForm extends JetView {
 	}
 
 	showWindow(id) {
+		const str = this.$$("template");
+		const btn = this.$$("saveButton");
 		if (id && activities.exists(id)) {
 			this.$$("form").setValues(activities.getItem(id));
+			str.setValues({name: "Edit"});
+			btn.setValue("Save");
+		}
+		else {
+			str.setValues({name: "Add"});
+			btn.setValue("Add");
 		}
 		this.getRoot().show();
 	}
@@ -118,14 +120,14 @@ export default class EditForm extends JetView {
 	init() {
 		this.on(this.$$("saveButton"), "onItemClick", () => {
 			const form = this.$$("form");
-			if (!form.validate()) return false;
-			const values = form.getValues();
-
-			if (this._name === "Add") {
-				activities.add(values);
+			if (form.validate()) {
+				const values = form.getValues();
+				if (!values.id) {
+					activities.add(values);
+				}
+				else if (form.isDirty()) activities.updateItem(values.id, values);
+				this.closePopup();
 			}
-			else if (form.isDirty()) activities.updateItem(values.id, values);
-			this.closePopup();
 		});
 		this.on(this.$$("cancelButton"), "onItemClick", () => this.closePopup());
 	}
