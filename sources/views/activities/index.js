@@ -87,7 +87,7 @@ export default class ListView extends JetView {
 								const contact = contacts.getItem(value);
 								value = contact.FullName.toString().toLowerCase();
 								filter = filter.toString().toLowerCase();
-								return value.indexOf(filter) === 0;
+								return value.indexOf(filter) !== -1;
 							}
 						}
 					],

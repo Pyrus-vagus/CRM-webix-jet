@@ -99,7 +99,7 @@ export default class EditForm extends JetView {
 		const str = this.$$("template");
 		const btn = this.$$("saveButton");
 		if (id && activities.exists(id)) {
-			this.$$("form").setValues(activities.getItem(id));
+			this.Form.setValues(activities.getItem(id));
 			str.setValues({name: "Edit"});
 			btn.setValue("Save");
 		}
@@ -111,21 +111,20 @@ export default class EditForm extends JetView {
 	}
 
 	closePopup() {
-		const form = this.$$("form");
-		form.clear();
-		form.clearValidation();
+		this.Form.clear();
+		this.Form.clearValidation();
 		this.getRoot().hide();
 	}
 
 	init() {
+		this.Form = this.$$("form");
 		this.on(this.$$("saveButton"), "onItemClick", () => {
-			const form = this.$$("form");
-			if (form.validate()) {
-				const values = form.getValues();
+			if (this.Form.validate()) {
+				const values = this.Form.getValues();
 				if (!values.id) {
 					activities.add(values);
 				}
-				else if (form.isDirty()) activities.updateItem(values.id, values);
+				else if (this.Form.isDirty()) activities.updateItem(values.id, values);
 				this.closePopup();
 			}
 		});
