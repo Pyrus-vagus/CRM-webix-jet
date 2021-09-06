@@ -1,6 +1,7 @@
 import {JetView} from "webix-jet";
 
 import contacts from "../../models/contacts";
+import DetailsView from "./details";
 import "../../styles/view.css";
 
 export default class ListView extends JetView {
@@ -30,18 +31,13 @@ export default class ListView extends JetView {
 			}
 		};
 		return {
-			cols: [list, {$subview: "contacts.details"}]
+			cols: [list, DetailsView]
 		};
 	}
 
 	init() {
 		contacts.waitData.then(() => {
 			this.$$("list").parse(contacts);
-		});
-	}
-
-	urlChange() {
-		contacts.waitData.then(() => {
 			const id = this.getParam("id");
 			if (!contacts.exists(id)) {
 				this.$$("list").select(contacts.getFirstId());
