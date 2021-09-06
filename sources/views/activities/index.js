@@ -117,18 +117,6 @@ export default class ListView extends JetView {
 					fillspace: 1
 				}
 			],
-			on: {
-				onCheck(row, column, state) {
-					if (column === "State") {
-						activities.updateItem(row, {
-							State: state
-						});
-					}
-				},
-				onAfterSelect: (id) => {
-					this.setParam("id", id, true);
-				}
-			},
 			onClick: {
 				"fa-trash-alt": (event, id) => {
 					this.webix
@@ -149,19 +137,6 @@ export default class ListView extends JetView {
 		return {
 			rows: [header, grid]
 		};
-	}
-
-	urlChange() {
-		activities.waitData.then(() => {
-			const id = this.getParam("id");
-			if (!activities.exists(id)) {
-				this.$$("table").select(activities.getFirstId());
-			}
-			else if (id && activities.exists(id)) {
-				this.$$("table").select(id);
-				this.$$("table").showItem(id);
-			}
-		});
 	}
 
 	init() {
