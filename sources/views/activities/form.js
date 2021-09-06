@@ -120,13 +120,12 @@ export default class EditForm extends JetView {
 			const form = this.$$("form");
 			if (!form.validate()) return false;
 			const values = form.getValues();
-			activities.waitSave(() => {
-				if (this._name === "Add") {
-					activities.add(values);
-				}
-				else if (form.isDirty()) activities.updateItem(values.id, values);
-				this.closePopup();
-			});
+
+			if (this._name === "Add") {
+				activities.add(values);
+			}
+			else if (form.isDirty()) activities.updateItem(values.id, values);
+			this.closePopup();
 		});
 		this.on(this.$$("cancelButton"), "onItemClick", () => this.closePopup());
 	}

@@ -159,7 +159,7 @@ export default class ListView extends JetView {
 			}
 			else if (id && activities.exists(id)) {
 				this.$$("table").select(id);
-				// this.$$("table").showItem(id);
+				this.$$("table").showItem(id);
 			}
 		});
 	}
@@ -174,7 +174,7 @@ export default class ListView extends JetView {
 		this.win2 = this.ui(new EditForm(this.app, "Edit", ""));
 		this.on(activities, "onAfterAdd", (id) => {
 			this.$$("table").select(id);
-			this.$$("table").show(id);
+			this.$$("table").showItem(id);
 		});
 	}
 }
