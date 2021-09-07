@@ -138,17 +138,14 @@ export default class ListView extends JetView {
 	}
 
 	init() {
+		const table = this.$$("table");
 		this.webix.promise
 			.all([activities.waitData, contacts.waitData, activityType.waitData])
-			.then(() => {
-				this.$$("table").parse(activities);
-				this.$$("table").refresh();
-				this.$$("table").refresh();
-			});
+			.then(() => table.parse(activities));
 		this.win1 = this.ui(EditForm);
 		this.on(activities, "onAfterAdd", (id) => {
-			this.$$("table").select(id);
-			this.$$("table").showItem(id);
+			table.select(id);
+			table.showItem(id);
 		});
 	}
 }

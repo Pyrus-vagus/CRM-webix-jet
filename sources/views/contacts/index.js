@@ -39,12 +39,10 @@ export default class ListView extends JetView {
 		contacts.waitData.then(() => {
 			this.$$("list").parse(contacts);
 			const id = this.getParam("id");
-			if (!contacts.exists(id)) {
-				this.$$("list").select(contacts.getFirstId());
-			}
-			else if (id && contacts.exists(id)) {
+			if (contacts.exists(id)) {
 				this.$$("list").select(id);
 			}
+			else this.$$("list").select(contacts.getFirstId());
 		});
 	}
 }

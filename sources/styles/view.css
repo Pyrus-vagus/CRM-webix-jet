@@ -66,14 +66,7 @@
 .user-preview > span {
 	font-size: 12px;
 }
-/* .edit .webix_cell:hover,
-.edit .webix_cell .webix_row_select:hover {
-  background-color: lightyellow !important;
-}
-.delete .webix_cell:hover,
-.edit .webix_cell .webix_row_select:hover {
-  background-color: lightpink !important;
-} */
+
 .webix_icon.webix_icon.far.fa-edit,
 .webix_icon.far.fa-trash-alt {
 	cursor: pointer;
