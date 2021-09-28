@@ -1,4 +1,5 @@
 import {JetView} from "webix-jet";
+import activities from "../../models/activities";
 
 import contacts from "../../models/contacts";
 import statuses from "../../models/statuses";
@@ -65,7 +66,7 @@ export default class DetailsView extends JetView {
 							width: 78,
 							height: 35,
 							click: () => {
-								const id = this.getParam("id", true);
+								const contactId = this.getParam("id", true);
 								this.webix
 									.confirm({
 										title: "Are you sure?",
@@ -75,7 +76,14 @@ export default class DetailsView extends JetView {
 										text: "You will delete the item permanently!"
 									})
 									.then(() => {
-										contacts.remove(id);
+										const activityIDs = [];
+										activities.data.each((o) => {
+											if (+o.ContactID === +contactId) {
+												activityIDs.push(o.id);
+											}
+										});
+										activityIDs.forEach((i) => activities.remove(i));
+										contacts.remove(contactId);
 									});
 							}
 						},
