@@ -3,6 +3,7 @@ import {JetView} from "webix-jet";
 import contacts from "../../models/contacts";
 import statuses from "../../models/statuses";
 import "../../styles/view.css";
+import TableContacts from "./tabbar";
 
 export default class DetailsView extends JetView {
 	config() {
@@ -16,34 +17,34 @@ export default class DetailsView extends JetView {
         <div class="container">
            <div class = "container-item container-picture">
              <img class="picture" src="${
-	o.Photo ||
+								o.Photo ||
 								"https://lowcars.net/wp-content/uploads/2017/02/userpic.png"
-}" alt="Image" style="width:100%">
+							}" alt="Image" style="width:80%">
              <span class = "status">${
-	status ? status.Value : "Status"
-} <span class="fas fa-${status ? status.Icon : ""}"></span>
+								status ? status.Value : "Status"
+							} <span class="fas fa-${status ? status.Icon : ""}"></span>
            </div>
            <ul class="fa-ul list container-item">
              <li><span class="fa-li"><i class="fas fa-envelope"></i></span>${
-	o.Email || "email"
-}</li>
+								o.Email || "email"
+							}</li>
              <li><span class="fa-li"><i class="fab fa-skype"></i></span>${
-	o.Skype || "skype"
-}</li>
+								o.Skype || "skype"
+							}</li>
              <li><span class="fa-li"><i class="fas fa-tag"></i></span>${
-	o.Job || "job"
-}</li>
+								o.Job || "job"
+							}</li>
              <li><span class="fa-li"><i class="fas fa-briefcase"></i></span>${
-	o.Company || "company"
-}</li>
+								o.Company || "company"
+							}</li>
            </ul>
            <ul class="fa-ul list container-item" >
              <li><span class="fa-li"><i class="far fa-calendar-alt"></i></span>${
-	o.Birthday || "date of birth"
-}</li>
+								webix.i18n.longDateFormatStr(o.Birthday) || "date of birth"
+							}</li>
              <li><span class="fa-li"><i class="fas fa-map-marker-alt"></i></span>${
-	o.Address || "Not specified"
-}</li>
+								o.Address || "Not specified"
+							}</li>
            </ul>
         </div>`;
 			}
@@ -62,7 +63,21 @@ export default class DetailsView extends JetView {
 								"<span class='webix_icon far fa-trash-alt' style='color:black'></span><span class='text'>Delete</span>",
 							css: "icon-btn",
 							width: 78,
-							height: 35
+							height: 35,
+							click: () => {
+								const id = this.getParam("id", true);
+								this.webix
+									.confirm({
+										title: "Are you sure?",
+										type: "confirm-warning",
+										ok: "Yes",
+										cancel: "No",
+										text: "You will delete the item permanently!"
+									})
+									.then(() => {
+										contacts.remove(id);
+									});
+							}
 						},
 						{
 							view: "button",
@@ -70,14 +85,20 @@ export default class DetailsView extends JetView {
 								"<span class='webix_icon far fa-edit' style='color:black'></span><span class='text'>Edit</span>",
 							css: "icon-btn",
 							width: 78,
-							height: 35
+							height: 35,
+							click: () => {
+								const id = this.getParam("id", true);
+								this.app.callEvent("onEdit", [id]);
+							}
 						}
 					]
 				},
 				{}
 			]
 		};
-		return {cols: [left, right], css: "details"};
+		return {
+			rows: [{cols: [left, right], css: "details"}, {$subview: TableContacts}]
+		};
 	}
 
 	urlChange() {

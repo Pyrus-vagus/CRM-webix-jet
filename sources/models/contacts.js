@@ -6,7 +6,6 @@ const contacts = new webix.DataCollection({
 		$init: (o) => {
 			o.FullName = `${o.FirstName} ${o.LastName}`;
 			o.Birthday = new Date(o.Birthday);
-			o.Birthday = webix.i18n.longDateFormatStr(o.Birthday);
 			o.StartDate = new Date(o.StartDate);
 		},
 		$save: (o) => {
