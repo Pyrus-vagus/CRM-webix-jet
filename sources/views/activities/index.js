@@ -6,7 +6,11 @@ import contacts from "../../models/contacts";
 import EditForm from "./form";
 import "../../styles/view.css";
 
-export default class ListView extends JetView {
+export default class ActivityView extends JetView {
+	constructor(app, name) {
+		super(app, name);
+		this._name = name;
+	}
 	config() {
 		const header = {
 			type: "header",
@@ -14,12 +18,10 @@ export default class ListView extends JetView {
 				{fillspace: true},
 				{
 					view: "button",
+					localId: "addActivity",
 					value: "Add activity",
 					width: 150,
-					css: "icon-btn",
-					click: () => {
-						this.win1.showWindow();
-					}
+					css: "icon-btn"
 				}
 			]
 		};
@@ -93,7 +95,7 @@ export default class ListView extends JetView {
 					],
 					template: (o) => {
 						const contact = contacts.getItem(o.ContactID);
-						return `${contacts ? contact.FullName : "Unknown person"}`;
+						return `${contact ? contact.FullName : "Unknown person"}`;
 					},
 					sort: "text",
 					fillspace: 4
@@ -132,20 +134,36 @@ export default class ListView extends JetView {
 				}
 			}
 		};
-		return {
-			rows: [header, grid]
-		};
+		return this._name === "contact"
+			? {rows: [grid, header]}
+			: {
+					rows: [header, grid]
+			  };
 	}
-
+	urlChange() {
+		contacts.waitData.then(() => {
+			if (this._name === "contact") {
+				const contactId = this.getParam("id", true);
+				activities.filter("#ContactID#", contactId);
+			} else activities.filter();
+		});
+	}
 	init() {
-		const table = this.$$("table");
+		this.table = this.$$("table");
 		this.webix.promise
 			.all([activities.waitData, contacts.waitData, activityType.waitData])
-			.then(() => table.parse(activities));
+			.then(() => this.table.parse(activities));
 		this.win1 = this.ui(EditForm);
 		this.on(activities, "onAfterAdd", (id) => {
-			table.select(id);
-			table.showItem(id);
+			this.table.select(id);
+			this.table.showItem(id);
 		});
+		this.on(this.$$("addActivity"), "onItemClick", () => {
+			const contact = this.getParam("id", true);
+			this.win1.showWindow("", contact);
+		});
+		if (this._name === "contact") {
+			this.table.hideColumn("ContactID");
+		}
 	}
 }

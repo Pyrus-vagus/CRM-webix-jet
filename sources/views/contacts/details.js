@@ -20,7 +20,7 @@ export default class DetailsView extends JetView {
              <img class="picture" src="${
 								o.Photo ||
 								"https://lowcars.net/wp-content/uploads/2017/02/userpic.png"
-							}" alt="Image" style="width:80%">
+							}" alt="Image" style="width:150px; height:150px">
              <span class = "status">${
 								status ? status.Value : "Status"
 							} <span class="fas fa-${status ? status.Icon : ""}"></span>

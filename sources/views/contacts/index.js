@@ -18,7 +18,7 @@ export default class ListView extends JetView {
           <image class="user" src="${
 						o.Photo ||
 						"https://lowcars.net/wp-content/uploads/2017/02/userpic.png"
-					}" style="width:40px">
+					}" style="width:40px; height:40px">
           <h3 class="user-preview">${o.FullName || "Name Surname"} 
 				<div>${o.Company || "Company"}</div>
           </h3>

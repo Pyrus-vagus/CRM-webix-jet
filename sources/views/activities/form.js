@@ -19,7 +19,7 @@ export default class EditForm extends JetView {
 				elements: [
 					{
 						localId: "template",
-						template: o => `${o.name} activity`,
+						template: (o) => `${o.name} activity`,
 						type: "header"
 					},
 					{view: "text", name: "Details", label: "Details"},
@@ -29,7 +29,7 @@ export default class EditForm extends JetView {
 						label: "Type",
 						options: {
 							body: {
-								template: o => activityType.getItem(o.id).Value,
+								template: (o) => activityType.getItem(o.id).Value,
 								data: activityType
 							}
 						},
@@ -38,10 +38,11 @@ export default class EditForm extends JetView {
 					{
 						view: "richselect",
 						name: "ContactID",
+						localId: "contact",
 						label: "Contact",
 						options: {
 							body: {
-								template: o => contacts.getItem(o.id).FullName,
+								template: (o) => contacts.getItem(o.id).FullName,
 								data: contacts
 							}
 						},
@@ -95,17 +96,19 @@ export default class EditForm extends JetView {
 		return form;
 	}
 
-	showWindow(id) {
+	showWindow(id, contact) {
 		const str = this.$$("template");
 		const btn = this.$$("saveButton");
 		if (id && activities.exists(id)) {
 			this.Form.setValues(activities.getItem(id));
 			str.setValues({name: "Edit"});
 			btn.setValue("Save");
-		}
-		else {
+		} else {
 			str.setValues({name: "Add"});
 			btn.setValue("Add");
+		}
+		if (contact) {
+			this.$$("contact").setValue(contact);
 		}
 		this.getRoot().show();
 	}
@@ -123,8 +126,8 @@ export default class EditForm extends JetView {
 				const values = this.Form.getValues();
 				if (!values.id) {
 					activities.add(values);
-				}
-				else if (this.Form.isDirty()) activities.updateItem(values.id, values);
+				} else if (this.Form.isDirty())
+					activities.updateItem(values.id, values);
 				this.closePopup();
 			}
 		});
