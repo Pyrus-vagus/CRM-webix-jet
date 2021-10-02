@@ -1,5 +1,6 @@
 import {JetView} from "webix-jet";
 import ActivityView from "../activities";
+import FilesView from "./files";
 
 export default class TableContacts extends JetView {
 	config() {
@@ -11,11 +12,11 @@ export default class TableContacts extends JetView {
 					body: new ActivityView(this.app, "contact")
 				},
 				{
-					header: "Files"
+					header: "Files",
+					body: FilesView
 				}
 			]
 		};
-
 		return tab;
 	}
 }

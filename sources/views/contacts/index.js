@@ -63,9 +63,9 @@ export default class ListView extends JetView {
 			this.list.select(res.id);
 		});
 		this.on(this.app, "onEdit", () =>
-			this.show("contacts.editForm").then(() =>
-				this.app.callEvent("assignValues", [this.getParam("id"), true])
-			)
+			this.show("contacts.editForm").then(() => {
+				this.app.callEvent("assignValues", [this.getParam("id"), true]);
+			})
 		);
 	}
 }

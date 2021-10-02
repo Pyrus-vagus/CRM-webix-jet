@@ -162,7 +162,7 @@ export default class EditContacts extends JetView {
 			values.Photo = this.userPhoto.getValues().Photo;
 			if (!values.id) {
 				contacts.add(values);
-			} else if (this.Form.isDirty()) contacts.updateItem(values.id, values);
+			} else contacts.updateItem(values.id, values);
 			this.cleanForm();
 			this.show("contacts.details");
 		}
