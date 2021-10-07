@@ -19,34 +19,34 @@ export default class DetailsView extends JetView {
         <div class="container">
            <div class = "container-item container-picture">
              <img class="picture" src="${
-								o.Photo ||
+	o.Photo ||
 								"https://lowcars.net/wp-content/uploads/2017/02/userpic.png"
-							}" alt="Image" style="width:150px; height:150px">
+}" alt="Image" style="width:150px; height:150px">
              <span class = "status">${
-								status ? status.Value : "Status"
-							} <span class="fas fa-${status ? status.Icon : ""}"></span>
+	status ? status.Value : "Status"
+} <span class="fas fa-${status ? status.Icon : ""}"></span>
            </div>
            <ul class="fa-ul list container-item">
              <li><span class="fa-li"><i class="fas fa-envelope"></i></span>${
-								o.Email || "email"
-							}</li>
+	o.Email || "email"
+}</li>
              <li><span class="fa-li"><i class="fab fa-skype"></i></span>${
-								o.Skype || "skype"
-							}</li>
+	o.Skype || "skype"
+}</li>
              <li><span class="fa-li"><i class="fas fa-tag"></i></span>${
-								o.Job || "job"
-							}</li>
+	o.Job || "job"
+}</li>
              <li><span class="fa-li"><i class="fas fa-briefcase"></i></span>${
-								o.Company || "company"
-							}</li>
+	o.Company || "company"
+}</li>
            </ul>
            <ul class="fa-ul list container-item" >
              <li><span class="fa-li"><i class="far fa-calendar-alt"></i></span>${
-								webix.i18n.longDateFormatStr(o.Birthday) || "date of birth"
-							}</li>
+	webix.i18n.longDateFormatStr(o.Birthday) || "date of birth"
+}</li>
              <li><span class="fa-li"><i class="fas fa-map-marker-alt"></i></span>${
-								o.Address || "Not specified"
-							}</li>
+	o.Address || "Not specified"
+}</li>
            </ul>
         </div>`;
 			}
@@ -90,8 +90,8 @@ export default class DetailsView extends JetView {
 													filesIDs.push(o.id);
 												}
 											});
-											activityIDs.forEach((i) => activities.remove(i));
-											filesIDs.forEach((i) => filesCollection.remove(i));
+											activityIDs.forEach(i => activities.remove(i));
+											filesIDs.forEach(i => filesCollection.remove(i));
 											contacts.remove(contactId);
 										}
 									});
@@ -125,7 +125,8 @@ export default class DetailsView extends JetView {
 			if (id && contacts.exists(id)) {
 				const values = contacts.getItem(id);
 				this.$$("left").setValues(values);
-			} else this.$$("left").setValues(emptyValues);
+			}
+			else this.$$("left").setValues(emptyValues);
 		});
 	}
 }

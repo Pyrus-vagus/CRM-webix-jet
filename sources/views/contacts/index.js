@@ -11,7 +11,7 @@ export default class ListView extends JetView {
 			select: true,
 			width: 200,
 			type: {
-				template: (o) => `
+				template: o => `
         <div class="container-list">
           <image class="user" src="${
 						o.Photo ||
@@ -45,21 +45,22 @@ export default class ListView extends JetView {
 			value: "Add contact",
 			localId: "addBtn",
 			css: "details",
-			click: () =>
-				this.mode === "edit"
-					? this.confirm("contacts.editForm")
-					: this.show("contacts.editForm")
+			click: () => (this.mode === "edit"
+				? this.confirm("contacts.editForm")
+				: this.show("contacts.editForm"))
 		};
 		return {
 			cols: [{rows: [list, addContact]}, {$subview: true}]
 		};
 	}
+
 	urlChange() {
 		contacts.waitData.then(() => {
 			this.mode = this.getSubView().getParam("mode");
 			this.page = this.getUrl()[1].page;
 		});
 	}
+
 	init() {
 		this.list = this.$$("list");
 		contacts.waitData.then(() => {
@@ -70,19 +71,23 @@ export default class ListView extends JetView {
 			if (res.id) {
 				this.setParam("id", res.id, true);
 				this.list.select(res.id);
-			} else {
+			}
+			else {
 				this.setParam("id", "", true);
 				this.selectUser();
 			}
 		});
 	}
+
 	selectUser() {
 		const id = this.getParam("id");
 		if (contacts.exists(id)) {
 			this.list.select(id);
-		} else this.list.select(contacts.getFirstId());
+		}
+		else this.list.select(contacts.getFirstId());
 		this.show("contacts.details");
 	}
+
 	confirm(page) {
 		this.webix
 			.confirm({

@@ -80,7 +80,7 @@ export default class FilesView extends JetView {
 		contacts.waitData.then(() => {
 			const contactId = this.getParam("id", true);
 			if (contactId && contacts.exists(contactId)) {
-				filesCollection.filter((o) => +o.ContactID === +contactId);
+				filesCollection.filter(o => +o.ContactID === +contactId);
 			}
 		});
 	}

@@ -8,7 +8,7 @@ export default class EditContacts extends JetView {
 	config() {
 		const headerLabel = {
 			type: "header",
-			template: (o) => `${o.name || "Add new"} contact`,
+			template: o => `${o.name || "Add new"} contact`,
 			localId: "headerLabel"
 		};
 		const buttons = {
@@ -78,11 +78,10 @@ export default class EditContacts extends JetView {
 							cols: [
 								{
 									localId: "userPhoto",
-									template: (o) =>
-										`<img src="${
-											o.Photo ||
+									template: o => `<img src="${
+										o.Photo ||
 											"https://lowcars.net/wp-content/uploads/2017/02/userpic.png"
-										}" alt="Image" width=100%>`,
+									}" alt="Image" width=100%>`,
 									autoheight: true,
 									type: "clean"
 								},
@@ -143,12 +142,14 @@ export default class EditContacts extends JetView {
 		this.userPhoto = this.$$("userPhoto");
 		this.on(this.$$("saveBtn"), "onItemClick", () => this.saveForm());
 	}
+
 	urlChange() {
 		contacts.waitData.then(() => {
 			const id = this.getParam("id", true);
 			this.addValue(id);
 		});
 	}
+
 	addValue(id) {
 		const mode = this.getParam("mode");
 		if (mode === "edit" && id && contacts.exists(id)) {
@@ -157,12 +158,14 @@ export default class EditContacts extends JetView {
 			this.userPhoto.setValues({Photo: data.Photo});
 			this.$$("headerLabel").setValues({name: "Edit"});
 			this.$$("saveBtn").setValue("Save");
-		} else {
+		}
+		else {
 			this.Form.clear();
 			this.$$("headerLabel").setValues({name: "Add"});
 			this.$$("saveBtn").setValue("Add");
 		}
 	}
+
 	saveForm() {
 		if (this.Form.validate()) {
 			const values = this.Form.getValues();
@@ -170,11 +173,13 @@ export default class EditContacts extends JetView {
 			values.Photo = this.userPhoto.getValues().Photo;
 			if (!values.id) {
 				contacts.add(values);
-			} else contacts.updateItem(values.id, values);
+			}
+			else contacts.updateItem(values.id, values);
 			this.cleanForm();
 			this.show("contacts.details");
 		}
 	}
+
 	cleanForm() {
 		this.Form.clear();
 		this.Form.clearValidation();
