@@ -27,7 +27,7 @@ export default class FilesView extends JetView {
 					id: "sizetext",
 					header: "Size",
 					fillspace: 5,
-					sort: "text"
+					sort: this.sortSize
 				},
 				{
 					id: "bin",
@@ -72,16 +72,47 @@ export default class FilesView extends JetView {
 		return {rows: [grid, uploader]};
 	}
 
+	init() {
+		this.$$("table").parse(filesCollection);
+	}
+
 	urlChange() {
 		contacts.waitData.then(() => {
 			const contactId = this.getParam("id", true);
 			if (contactId && contacts.exists(contactId)) {
-				filesCollection.filter(o => +o.ContactID === +contactId);
+				filesCollection.filter((o) => +o.ContactID === +contactId);
 			}
 		});
 	}
 
-	init() {
-		this.$$("table").parse(filesCollection);
+	sortSize(a, b) {
+		let first = parseFloat(a.sizetext);
+		let second = parseFloat(b.sizetext);
+
+		if (a.sizetext.includes("Kb")) {
+			first *= 1024;
+		}
+
+		if (b.sizetext.includes("Kb")) {
+			second *= 1024;
+		}
+
+		if (a.sizetext.includes("Mb")) {
+			first *= 1024 * 1024;
+		}
+
+		if (b.sizetext.includes("Mb")) {
+			second *= 1024 * 1024;
+		}
+
+		if (a.sizetext.includes("Gb")) {
+			first *= 1024 * 1024 * 1024;
+		}
+
+		if (b.sizetext.includes("Gb")) {
+			second *= 1024 * 1024 * 1024;
+		}
+
+		return first - second;
 	}
 }
