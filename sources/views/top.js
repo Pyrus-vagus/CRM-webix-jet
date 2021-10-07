@@ -6,8 +6,7 @@ export default class TopView extends JetView {
 			localId: "top",
 			type: "header",
 			css: "top-header",
-			template: (o) =>
-				`<h1 style="padding-left: 18%; font-weight: normal; font-size: 24px; margin:0">${o.value}</h1>`
+			template: o => `<h1 style="padding-left: 18%; font-weight: normal; font-size: 24px; margin:0">${o.value}</h1>`
 		};
 
 		let menu = {
@@ -17,8 +16,7 @@ export default class TopView extends JetView {
 			width: 180,
 			layout: "y",
 			select: true,
-			template: (o) =>
-				`<span class="webix_icon ${o.icon}" style="padding-right: 10px"></span> ${o.value} `,
+			template: o => `<span class="webix_icon ${o.icon}" style="padding-right: 10px"></span> ${o.value} `,
 			data: [
 				{value: "Contacts", id: "contacts", icon: "fas fa-users"},
 				{

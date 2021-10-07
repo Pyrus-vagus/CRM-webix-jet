@@ -141,18 +141,26 @@ export default class EditContacts extends JetView {
 	init() {
 		this.Form = this.$$("form");
 		this.userPhoto = this.$$("userPhoto");
-		this.on(this.app, "assignValues", (id) => {
-			this.addValue(id);
-		});
 		this.on(this.$$("saveBtn"), "onItemClick", () => this.saveForm());
 	}
+	urlChange() {
+		contacts.waitData.then(() => {
+			const id = this.getParam("id", true);
+			this.addValue(id);
+		});
+	}
 	addValue(id) {
-		if (id && contacts.exists(id)) {
+		const mode = this.getParam("mode");
+		if (mode === "edit" && id && contacts.exists(id)) {
 			const data = contacts.getItem(id);
 			this.Form.setValues(data);
 			this.userPhoto.setValues({Photo: data.Photo});
 			this.$$("headerLabel").setValues({name: "Edit"});
 			this.$$("saveBtn").setValue("Save");
+		} else {
+			this.Form.clear();
+			this.$$("headerLabel").setValues({name: "Add"});
+			this.$$("saveBtn").setValue("Add");
 		}
 	}
 	saveForm() {

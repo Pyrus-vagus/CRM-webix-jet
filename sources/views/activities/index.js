@@ -11,6 +11,7 @@ export default class ActivityView extends JetView {
 		super(app, name);
 		this._name = name;
 	}
+
 	config() {
 		const header = {
 			type: "header",
@@ -136,18 +137,19 @@ export default class ActivityView extends JetView {
 		};
 		return this._name === "contact"
 			? {rows: [grid, header]}
-			: {
-					rows: [header, grid]
-			  };
+			: {rows: [header, grid]};
 	}
+
 	urlChange() {
 		contacts.waitData.then(() => {
 			if (this._name === "contact") {
 				const contactId = this.getParam("id", true);
 				activities.filter("#ContactID#", contactId);
-			} else activities.filter();
+			}
+			else activities.filter();
 		});
 	}
+
 	init() {
 		this.table = this.$$("table");
 		this.webix.promise

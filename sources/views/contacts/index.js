@@ -2,8 +2,6 @@ import {JetView} from "webix-jet";
 
 import contacts from "../../models/contacts";
 import "../../styles/view.css";
-import DetailsView from "./details";
-import EditContacts from "./editForm";
 
 export default class ListView extends JetView {
 	config() {
@@ -28,9 +26,17 @@ export default class ListView extends JetView {
 				height: 55
 			},
 			on: {
+				onBeforeSelect: (id) => {
+					if (this.page === "contacts.editForm") {
+						this.confirm("contacts.details");
+						this.setParam("id", id, true);
+					}
+				},
 				onAfterSelect: (id) => {
-					this.setParam("id", id, true);
-					this.show("contacts.details");
+					if (this.page !== "contacts.editForm") {
+						this.show("contacts.details");
+						this.setParam("id", id, true);
+					}
 				}
 			}
 		};
@@ -39,33 +45,56 @@ export default class ListView extends JetView {
 			value: "Add contact",
 			localId: "addBtn",
 			css: "details",
-			click: () => {
-				this.show("contacts.editForm");
-			}
+			click: () =>
+				this.mode === "edit"
+					? this.confirm("contacts.editForm")
+					: this.show("contacts.editForm")
 		};
 		return {
 			cols: [{rows: [list, addContact]}, {$subview: true}]
 		};
 	}
-
+	urlChange() {
+		contacts.waitData.then(() => {
+			this.mode = this.getSubView().getParam("mode");
+			this.page = this.getUrl()[1].page;
+		});
+	}
 	init() {
 		this.list = this.$$("list");
 		contacts.waitData.then(() => {
 			this.list.parse(contacts);
-			const id = this.getParam("id");
-			if (contacts.exists(id)) {
-				this.list.select(id);
-			} else this.list.select(contacts.getFirstId());
-			this.show("contacts.details");
+			this.selectUser();
 		});
 		webix.dp(contacts).attachEvent("onAfterSave", (res) => {
-			this.setParam("id", res.id, true);
-			this.list.select(res.id);
+			if (res.id) {
+				this.setParam("id", res.id, true);
+				this.list.select(res.id);
+			} else {
+				this.setParam("id", "", true);
+				this.selectUser();
+			}
 		});
-		this.on(this.app, "onEdit", () =>
-			this.show("contacts.editForm").then(() => {
-				this.app.callEvent("assignValues", [this.getParam("id"), true]);
+	}
+	selectUser() {
+		const id = this.getParam("id");
+		if (contacts.exists(id)) {
+			this.list.select(id);
+		} else this.list.select(contacts.getFirstId());
+		this.show("contacts.details");
+	}
+	confirm(page) {
+		this.webix
+			.confirm({
+				title: "Are you sure?",
+				type: "confirm-warning",
+				ok: "Yes",
+				cancel: "No",
+				text: "All changes will be lost!"
 			})
-		);
+			.then(() => {
+				if (page === "contacts.editForm") this.list.unselectAll();
+				this.show(page);
+			});
 	}
 }

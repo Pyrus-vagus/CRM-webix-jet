@@ -1,6 +1,7 @@
 import {JetView} from "webix-jet";
-import filesCollection from "../../models/filesCollection";
+
 import contacts from "../../models/contacts";
+import filesCollection from "../../models/filesCollection";
 
 export default class FilesView extends JetView {
 	config() {
@@ -70,14 +71,16 @@ export default class FilesView extends JetView {
 
 		return {rows: [grid, uploader]};
 	}
+
 	urlChange() {
 		contacts.waitData.then(() => {
 			const contactId = this.getParam("id", true);
 			if (contactId && contacts.exists(contactId)) {
-				filesCollection.filter((o) => +o.ContactID === +contactId);
+				filesCollection.filter(o => +o.ContactID === +contactId);
 			}
 		});
 	}
+
 	init() {
 		this.$$("table").parse(filesCollection);
 	}

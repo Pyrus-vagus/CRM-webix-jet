@@ -1,4 +1,5 @@
 import {JetView} from "webix-jet";
+
 import ActivityView from "../activities";
 import FilesView from "./files";
 

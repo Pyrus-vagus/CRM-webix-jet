@@ -1,7 +1,8 @@
 import {JetView} from "webix-jet";
-import activities from "../../models/activities";
 
+import activities from "../../models/activities";
 import contacts from "../../models/contacts";
+import filesCollection from "../../models/filesCollection";
 import statuses from "../../models/statuses";
 import "../../styles/view.css";
 import TableContacts from "./tabbar";
@@ -75,15 +76,24 @@ export default class DetailsView extends JetView {
 										cancel: "No",
 										text: "You will delete the item permanently!"
 									})
-									.then(() => {
-										const activityIDs = [];
-										activities.data.each((o) => {
-											if (+o.ContactID === +contactId) {
-												activityIDs.push(o.id);
-											}
-										});
-										activityIDs.forEach((i) => activities.remove(i));
-										contacts.remove(contactId);
+									.then((res) => {
+										if (res) {
+											const activityIDs = [];
+											const filesIDs = [];
+											activities.data.each((o) => {
+												if (+o.ContactID === +contactId) {
+													activityIDs.push(o.id);
+												}
+											});
+											filesCollection.data.each((o) => {
+												if (+o.ContactID === +contactId) {
+													filesIDs.push(o.id);
+												}
+											});
+											activityIDs.forEach((i) => activities.remove(i));
+											filesIDs.forEach((i) => filesCollection.remove(i));
+											contacts.remove(contactId);
+										}
 									});
 							}
 						},
@@ -95,8 +105,7 @@ export default class DetailsView extends JetView {
 							width: 78,
 							height: 35,
 							click: () => {
-								const id = this.getParam("id", true);
-								this.app.callEvent("onEdit", [id]);
+								this.show("contacts.editForm?mode=edit");
 							}
 						}
 					]
@@ -112,10 +121,11 @@ export default class DetailsView extends JetView {
 	urlChange() {
 		contacts.waitData.then(() => {
 			const id = this.getParam("id", true) || contacts.getFirstId();
+			const emptyValues = {FullName: "Name Surname"};
 			if (id && contacts.exists(id)) {
 				const values = contacts.getItem(id);
 				this.$$("left").setValues(values);
-			}
+			} else this.$$("left").setValues(emptyValues);
 		});
 	}
 }
