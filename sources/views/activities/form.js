@@ -38,6 +38,7 @@ export default class EditForm extends JetView {
 					{
 						view: "richselect",
 						name: "ContactID",
+						localId: "contact",
 						label: "Contact",
 						options: {
 							body: {
@@ -95,7 +96,7 @@ export default class EditForm extends JetView {
 		return form;
 	}
 
-	showWindow(id) {
+	showWindow(id, contact) {
 		const str = this.$$("template");
 		const btn = this.$$("saveButton");
 		if (id && activities.exists(id)) {
@@ -106,6 +107,9 @@ export default class EditForm extends JetView {
 		else {
 			str.setValues({name: "Add"});
 			btn.setValue("Add");
+		}
+		if (contact) {
+			this.$$("contact").setValue(contact);
 		}
 		this.getRoot().show();
 	}

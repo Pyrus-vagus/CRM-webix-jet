@@ -63,7 +63,7 @@
 	font-size: 15px;
 	line-height: 100%;
 }
-.user-preview > span {
+.user-preview > div {
 	font-size: 12px;
 }
 
@@ -77,7 +77,7 @@
 .webix_icon.far.fa-trash-alt:hover {
 	color: rgb(148, 28, 28);
 }
-@media only screen and (max-width: 1000px) {
+/* @media only screen and (max-width: 1000px) {
 	.container {
 		flex-direction: column;
 		align-items: center;
@@ -88,4 +88,4 @@
 	.top {
 		text-align: center;
 	}
-}
+} */

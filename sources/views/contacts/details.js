@@ -1,8 +1,11 @@
 import {JetView} from "webix-jet";
 
+import activities from "../../models/activities";
 import contacts from "../../models/contacts";
+import filesCollection from "../../models/filesCollection";
 import statuses from "../../models/statuses";
 import "../../styles/view.css";
+import TableContacts from "./tabbar";
 
 export default class DetailsView extends JetView {
 	config() {
@@ -18,7 +21,7 @@ export default class DetailsView extends JetView {
              <img class="picture" src="${
 	o.Photo ||
 								"https://lowcars.net/wp-content/uploads/2017/02/userpic.png"
-}" alt="Image" style="width:100%">
+}" alt="Image" style="width:150px; height:150px">
              <span class = "status">${
 	status ? status.Value : "Status"
 } <span class="fas fa-${status ? status.Icon : ""}"></span>
@@ -39,7 +42,7 @@ export default class DetailsView extends JetView {
            </ul>
            <ul class="fa-ul list container-item" >
              <li><span class="fa-li"><i class="far fa-calendar-alt"></i></span>${
-	o.Birthday || "date of birth"
+	webix.i18n.longDateFormatStr(o.Birthday) || "date of birth"
 }</li>
              <li><span class="fa-li"><i class="fas fa-map-marker-alt"></i></span>${
 	o.Address || "Not specified"
@@ -62,7 +65,37 @@ export default class DetailsView extends JetView {
 								"<span class='webix_icon far fa-trash-alt' style='color:black'></span><span class='text'>Delete</span>",
 							css: "icon-btn",
 							width: 78,
-							height: 35
+							height: 35,
+							click: () => {
+								const contactId = this.getParam("id", true);
+								this.webix
+									.confirm({
+										title: "Are you sure?",
+										type: "confirm-warning",
+										ok: "Yes",
+										cancel: "No",
+										text: "You will delete the item permanently!"
+									})
+									.then((res) => {
+										if (res) {
+											const activityIDs = [];
+											const filesIDs = [];
+											activities.data.each((o) => {
+												if (+o.ContactID === +contactId) {
+													activityIDs.push(o.id);
+												}
+											});
+											filesCollection.data.each((o) => {
+												if (+o.ContactID === +contactId) {
+													filesIDs.push(o.id);
+												}
+											});
+											activityIDs.forEach(i => activities.remove(i));
+											filesIDs.forEach(i => filesCollection.remove(i));
+											contacts.remove(contactId);
+										}
+									});
+							}
 						},
 						{
 							view: "button",
@@ -70,23 +103,30 @@ export default class DetailsView extends JetView {
 								"<span class='webix_icon far fa-edit' style='color:black'></span><span class='text'>Edit</span>",
 							css: "icon-btn",
 							width: 78,
-							height: 35
+							height: 35,
+							click: () => {
+								this.show("contacts.editForm?mode=edit");
+							}
 						}
 					]
 				},
 				{}
 			]
 		};
-		return {cols: [left, right], css: "details"};
+		return {
+			rows: [{cols: [left, right], css: "details"}, {$subview: TableContacts}]
+		};
 	}
 
 	urlChange() {
 		contacts.waitData.then(() => {
 			const id = this.getParam("id", true) || contacts.getFirstId();
+			const emptyValues = {FullName: "Name Surname"};
 			if (id && contacts.exists(id)) {
 				const values = contacts.getItem(id);
 				this.$$("left").setValues(values);
 			}
+			else this.$$("left").setValues(emptyValues);
 		});
 	}
 }

@@ -56,7 +56,6 @@ export default class TopView extends JetView {
 
 	urlChange() {
 		const page = this.getUrl()[1].page;
-		// const rawValue = page.substring(0, page.indexOf("."));
 		const value = {
 			value: page.charAt(0).toUpperCase() + page.slice(1)
 		};
